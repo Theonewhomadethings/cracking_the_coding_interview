@@ -5,47 +5,44 @@ Given a sorted (increasing order) array with unique interger elements,
 write an algorithm to create a binary search tree with minimal height.
 '''
 
-'''
-We have an array/list with properties
-[1, 2, 3, 4, 5, 6, 7, .....]
--sorted in ascending order 
--Unique integer elemetns
 
-We want to use this array to create a binary search tree with min height
+class TreeNode:
+    #First define a class for the binary tree nodes
+    def __init__(self, value = 0, left = None, right = None):
+        self.value = value #value of the node
+        self.left = left # left child
+        self.right = right #right child
 
 
-A binary search tree is:
-A binary tree is a tree in which each node has 2 children
-                1
-            2       3
-        4      5 6      7 
-
-A binary search tree is a binary tee in which every node fits a specific 
-ordering propery e,g, all left descendents are less than or equal to 
-all right descendants. 
-
-'''
-'''
-Pseudocode
-_______________________________
-If A is empty, then return Null
-find the mid element, and make it root
-Divide the array into two sub-arrays, left part of the mid element, and right part of the mid element
-recursively perform the same task for the left subarray and right subarray.
-'''
-
-class BST:
-    '''
-    Constructor
-
-    '''
-    def __init__(self, data, left = None, right = None):
-        self.data = data
-        self.left = left
-        self.right = right
-
-    def insert(self):
-        return None
-    
-    def pop(self):
+#Define the function to create the minimal height BST. Takes a sorted array as input and returns the root node of the tree.
+def minimal_tree(sorted_array):
+    #base case: Return None if the array is empty
+    if not sorted_array:
+         return None
         
+    #Calculate the mid index
+    mid = len(sorted_array) // 2
+    #create the root node with the mid val
+    root = TreeNode(value = sorted_array[mid])
+
+    #recursively build the left subtree
+    root.left = minimal_tree(sorted_array[:mid])
+    #recursively build the right subtree
+    root.right = minimal_tree(sorted_array[mid+1:])
+
+    #return the root node of the constructed tree
+    return root
+
+#function to print the tree in a pre-order traversal to test the solution
+def pre_order_traversal(node):
+    if node:
+        print(node.value, end =  " ")
+        pre_order_traversal(node.left)
+        pre_order_traversal(node.right)
+
+
+#Test the code by creating a min height tree from a sorted array and printing its elemetns
+sorted_array = [1, 2, 3, 4, 5, 6, 7]
+root = minimal_tree(sorted_array)
+print("Pre-order traversal of the minimal height tree:")
+pre_order_traversal(root)
