@@ -1,0 +1,17 @@
+
+def find_unique_int(a):
+    counts = {}
+
+    for num in a:
+        if num in counts:
+            counts[num] += 1
+        
+        else:
+            counts[num] = 1
+        
+    for num, count in counts.items():
+        if count == 1:
+            return num
+        
+x = find_unique_int(a = [1, 1, 2, 2, 3, 3, 6])
+print(x)
